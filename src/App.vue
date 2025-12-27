@@ -3,7 +3,7 @@ export default {
   data() {
     return {
       title: 'Vue.Js',
-      status: true
+      status: "Inactive"
     }
   }
 }
@@ -12,7 +12,8 @@ export default {
 <template>
   <p>{{ title }}</p>
 
-  <p v-if="status">Active</p>
-  <p v-else>Inactive</p>
+  <p v-if="status==='Active'">Active</p>
+  <p v-else-if="status==='Inactive'">Inactive</p>
+  <p v-else>Unknown</p>
 
 </template>
