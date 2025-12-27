@@ -1,11 +1,16 @@
 <script setup></script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <h2>Hello Vue.Js</h2>
+  <p>Vue is a progressive framework for building user interfaces.</p>
+  <p class="heading">Styling with Vue.Js</p>
 </template>
 
-<style scoped></style>
+<style scoped>
+p {
+  color: grey;
+}
+.heading {
+  color: red;
+}
+</style>
