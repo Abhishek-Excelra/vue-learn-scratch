@@ -1,20 +1,18 @@
-<script setup>
-import Header from './components/Layout/Header.vue'
+<script>
+export default {
+  data() {
+    return {
+      title: 'Vue.Js',
+      status: true
+    }
+  }
+}
 </script>
 
 <template>
-  <h2>Hello Vue.Js</h2>
-  <p>MYYYY Vue is a progressive framework for building user interfaces.</p>
-  <p class="heading">Styling with Vue.Js</p>
+  <p>{{ title }}</p>
 
-  <Header />
+  <p v-if="status">Active</p>
+  <p v-else>Inactive</p>
+
 </template>
-
-<style scoped>
-p {
-  color: grey;
-}
-.heading {
-  color: red;
-}
-</style>
