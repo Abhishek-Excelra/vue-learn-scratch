@@ -4,7 +4,8 @@ export default {
     return {
       title: 'Vue.Js',
       status: "Inactive",
-      tasks: ['task one', 'task two', 'task three']
+      tasks: ['task one', 'task two', 'task three'],
+      link:"https://google.com"
     }
   }
 }
@@ -21,4 +22,5 @@ export default {
   <ul>
     <li v-for="task in tasks" :key="task">{{ task }}</li>
   </ul>
+  <a :href="link">Google</a>
 </template>
