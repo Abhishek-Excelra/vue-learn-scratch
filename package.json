@@ -20,7 +20,8 @@
     "@coreui/vue": "^5.7.0",
     "bootstrap": "^4.6.2",
     "bootstrap-vue": "^2.23.1",
-    "vue": "^3.5.26"
+    "vue": "^3.5.26",
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

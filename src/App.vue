@@ -5,7 +5,9 @@
 // import FormComposition from './components/FormComposition.vue';
 // import FormTodoList from './components/FormTodoList.vue';
 // import FetchUsers from './components/FetchUsers.vue';
-import Jobs from './components/Jobs/index.vue';
+// import Jobs from './components/Jobs/index.vue';
+import Navbar from './components/Jobs/Navbar/Navbar.vue';
+import HomeView from './views/HomeView.vue';
 
 </script>
 
@@ -16,5 +18,7 @@ import Jobs from './components/Jobs/index.vue';
   <!-- <FormCompositi con /> -->
   <!-- <FormTodoList /> -->
   <!-- <FetchUsers /> -->
-  <Jobs />
+  <!-- <Jobs /> -->
+  <Navbar title="Vue related Jobs" />
+  <HomeView />
 </template>
