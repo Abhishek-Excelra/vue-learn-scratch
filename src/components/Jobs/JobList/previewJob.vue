@@ -2,15 +2,20 @@
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
 import Card from '@/components/common/Card/Card.vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
 
 const props = defineProps({
   id: String
 });
 
+const router = useRouter();
+const toast = useToast();
+
 const job = ref(null);
 const loading = ref(true);
+const deleting = ref(false);
 
 onMounted(async () => {
   try {
@@ -24,6 +29,24 @@ onMounted(async () => {
 })
 
 const goBack = () => window.history.back();
+
+const deleteJob = async () => {
+  if (!confirm('Are you sure you want to delete this job? This action cannot be undone.')) {
+    return;
+  }
+
+  deleting.value = true;
+  try {
+    await axios.delete(`/api/jobs/${props.id}`);
+    toast.success('Job deleted successfully!'); // TODO: uncomment after npm install
+    router.push('/jobs');
+  } catch (error) {
+    toast.error('Failed to delete job. Please try again.'); // TODO: uncomment after npm install
+    console.error(error);
+  } finally {
+    deleting.value = false;
+  }
+};
 </script>
 <template>
   <div v-if="loading" class="loader-wrapper">
@@ -43,6 +66,14 @@ const goBack = () => window.history.back();
       </div>
       <div class="job-detail__actions">
         <RouterLink to="/jobs" class="job-detail__apply-btn">Apply Now</RouterLink>
+        <button
+          @click="deleteJob"
+          class="job-detail__delete-btn"
+          :disabled="deleting"
+        >
+          <PulseLoader v-if="deleting" color="#ffffff" size="14px" />
+          <span v-else>Delete Job</span>
+        </button>
       </div>
     </Card>
 
@@ -137,6 +168,9 @@ const goBack = () => window.history.back();
 
 .job-detail__actions {
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .job-detail__apply-btn {
@@ -154,6 +188,31 @@ const goBack = () => window.history.back();
 .job-detail__apply-btn:hover {
   background-color: #334155;
   transform: translateY(-1px);
+}
+
+.job-detail__delete-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background-color: #dc2626;
+  color: #ffffff;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease;
+  min-width: 120px;
+}
+
+.job-detail__delete-btn:hover:not(:disabled) {
+  background-color: #b91c1c;
+  transform: translateY(-1px);
+}
+
+.job-detail__delete-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .job-detail__content {
