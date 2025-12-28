@@ -5,7 +5,6 @@
 
   defineProps({
     title: String,
-    default: 'MMM Default Title'
   })
   const navLinks = ref([
     { name: 'Home', path: '/' },
