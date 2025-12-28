@@ -1,10 +1,10 @@
 <script setup>
-
-  // import OptionsApp from './components/OptionsApp.vue';
+  // import OptionsApp from './compone /OptionsApp.vue';
   // import CompositionAppLong from './components/CompositionAppLong.vue';
   // import CompositionAppShort from './components/CompositionAppShort.vue';
   // import FormComposition from './components/FormComposition.vue';
-  import FormTodoList from './components/FormTodoList.vue';
+  // import FormTodoList from './components/FormTodoList.vue';
+  import FetchUsers from './components/FetchUsers.vue';
 
 </script>
 
@@ -12,6 +12,9 @@
   <!-- <OptionsApp /> -->
   <!-- <CompositionAppLong /> -->
   <!-- <CompositionAppShort /> -->
-  <!-- <FormComposition /> -->
-  <FormTodoList />
+  <!-- <FormCompositi con /> -->
+  <!-- <FormTodoList /> -->
+   <FetchUsers />
 </template>
+
+
