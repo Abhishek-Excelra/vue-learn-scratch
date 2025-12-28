@@ -65,6 +65,7 @@ const deleteJob = async () => {
         </div>
       </div>
       <div class="job-detail__actions">
+        <RouterLink :to="`/edit-job/${props.id}`" class="job-detail__edit-btn">Edit Job</RouterLink>
         <RouterLink to="/jobs" class="job-detail__apply-btn">Apply Now</RouterLink>
         <button
           @click="deleteJob"
@@ -171,6 +172,23 @@ const deleteJob = async () => {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+}
+
+.job-detail__edit-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background-color: #059669;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.job-detail__edit-btn:hover {
+  background-color: #047857;
+  transform: translateY(-1px);
 }
 
 .job-detail__apply-btn {
