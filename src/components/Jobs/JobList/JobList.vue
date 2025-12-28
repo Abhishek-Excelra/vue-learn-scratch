@@ -11,7 +11,7 @@ const jobs = ref(JobData.jobs)
       <div>
         <h4>{{ job.title }}</h4>
         <p>{{ job.description }}</p>
-        <button>Apply</button>
+        <a class="btn btn-dark" :href="`/job/${job.id}`">Apply</a>
       </div>
     </Card>
   </div>
