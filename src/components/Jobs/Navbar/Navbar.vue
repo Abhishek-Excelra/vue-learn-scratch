@@ -15,7 +15,7 @@ defineProps({
 const navLinks = ref([
   { name: 'Home', path: '/' },
   { name: 'Jobs', path: '/jobs' },
-  { name: 'About', path: '/about' },
+  { name: 'Add Job', path: '/add-job' },
 ])
 </script>
 <template>
