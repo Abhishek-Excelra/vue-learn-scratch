@@ -14,7 +14,7 @@ import JobList from '@/components/Jobs/JobList/JobList.vue';
     </div>
   </section>
 
-  <JobList />
+  <JobList :columns="4" />
 </template>
 
 <style scoped>
@@ -23,7 +23,6 @@ import JobList from '@/components/Jobs/JobList/JobList.vue';
   color: #ffffff;
   padding: 5rem 1.5rem;
   text-align: center;
-  border-radius: 16px;
   margin-bottom: 3rem;
 }
 
@@ -54,7 +53,6 @@ import JobList from '@/components/Jobs/JobList/JobList.vue';
   font-weight: 600;
   color: #0f172a;
   background-color: #ffffff;
-  border-radius: 12px;
   text-decoration: none;
   transition: transform 160ms ease, box-shadow 160ms ease;
 }

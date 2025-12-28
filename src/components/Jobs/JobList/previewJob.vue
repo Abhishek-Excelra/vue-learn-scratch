@@ -1,7 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
-import Card from '@/components/common/Card/Card.vue';
 import { RouterLink, useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
@@ -38,66 +37,73 @@ const deleteJob = async () => {
   deleting.value = true;
   try {
     await axios.delete(`/api/jobs/${props.id}`);
-    toast.success('Job deleted successfully!'); // TODO: uncomment after npm install
+    toast.success('Job deleted successfully!');
     router.push('/jobs');
   } catch (error) {
-    toast.error('Failed to delete job. Please try again.'); // TODO: uncomment after npm install
+    toast.error('Failed to delete job. Please try again.');
     console.error(error);
   } finally {
     deleting.value = false;
   }
 };
 </script>
+
 <template>
   <div v-if="loading" class="loader-wrapper">
     <PulseLoader color="#0f172a" size="20px" />
   </div>
-  <div v-else-if="job" class="job-detail">
-    <button class="job-detail__back" @click="goBack">← Back to Jobs</button>
 
-    <Card class="job-detail__header">
-      <div class="job-detail__header-main">
+  <div v-else-if="job" class="job-detail">
+    <!-- Back Button -->
+    <button class="job-detail__back" @click="goBack">← Back</button>
+
+    <!-- Job Header -->
+    <div class="job-detail__header">
+      <div class="job-detail__title-section">
         <h1 class="job-detail__title">{{ job.title }}</h1>
-        <div class="job-detail__meta">
-          <span class="job-detail__type">{{ job.type }}</span>
-          <span class="job-detail__location">📍 {{ job.location }}</span>
-          <span class="job-detail__salary">💰 {{ job.salary }}</span>
-        </div>
+        <p class="job-detail__company-name">{{ job.company.name }}</p>
       </div>
+
+      <div class="job-detail__meta">
+        <span class="meta-badge">{{ job.type }}</span>
+        <span class="meta-badge">📍 {{ job.location }}</span>
+        <span class="meta-badge">💰 {{ job.salary }}</span>
+      </div>
+
       <div class="job-detail__actions">
-        <RouterLink :to="`/edit-job/${props.id}`" class="job-detail__edit-btn">Edit Job</RouterLink>
-        <RouterLink to="/jobs" class="job-detail__apply-btn">Apply Now</RouterLink>
-        <button
-          @click="deleteJob"
-          class="job-detail__delete-btn"
-          :disabled="deleting"
-        >
-          <PulseLoader v-if="deleting" color="#ffffff" size="14px" />
-          <span v-else>Delete Job</span>
+        <RouterLink :to="`/edit-job/${props.id}`" class="btn btn--edit">Edit</RouterLink>
+        <RouterLink to="/jobs" class="btn btn--apply">Apply</RouterLink>
+        <button @click="deleteJob" class="btn btn--delete" :disabled="deleting">
+          <PulseLoader v-if="deleting" color="#ffffff" size="12px" />
+          <span v-else>Delete</span>
         </button>
       </div>
-    </Card>
+    </div>
 
-    <div class="job-detail__content">
-      <Card class="job-detail__description">
-        <h2 class="job-detail__section-title">Job Description</h2>
+    <!-- Content Grid -->
+    <div class="job-detail__grid">
+      <div class="job-detail__description">
+        <h2 class="section-title">Description</h2>
         <p class="job-detail__text">{{ job.description }}</p>
-      </Card>
+      </div>
 
-      <Card class="job-detail__company">
-        <h2 class="job-detail__section-title">Company</h2>
-        <h3 class="job-detail__company-name">{{ job.company.name }}</h3>
-        <p class="job-detail__text">{{ job.company.description }}</p>
-        <div class="job-detail__contact">
+      <div class="job-detail__company">
+        <h2 class="section-title">Company</h2>
+        <h3 class="company-name">{{ job.company.name }}</h3>
+        <p class="company-description">{{ job.company.description }}</p>
+
+        <div class="contact-info">
           <p><strong>Email:</strong> {{ job.company.contactEmail }}</p>
           <p><strong>Phone:</strong> {{ job.company.contactPhone }}</p>
         </div>
-      </Card>
+      </div>
     </div>
   </div>
-  <div v-else class="job-detail__not-found">
+
+  <!-- Not Found -->
+  <div v-else class="not-found">
     <h2>Job not found</h2>
-    <RouterLink to="/jobs" class="job-detail__apply-btn">Browse Jobs</RouterLink>
+    <RouterLink to="/jobs" class="btn btn--apply">Browse Jobs</RouterLink>
   </div>
 </template>
 
@@ -106,23 +112,23 @@ const deleteJob = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 200px;
+  min-height: 300px;
 }
 
 .job-detail {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 1rem;
 }
 
 .job-detail__back {
   background: none;
   border: none;
   color: #64748b;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   cursor: pointer;
-  margin-bottom: 1.5rem;
-  transition: color 160ms ease;
+  margin-bottom: 1rem;
+  transition: color 200ms ease;
 }
 
 .job-detail__back:hover {
@@ -130,180 +136,164 @@ const deleteJob = async () => {
 }
 
 .job-detail__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   padding: 2rem;
-}
-
-.job-detail__header-main {
-  flex: 1;
+  margin-bottom: 2rem;
 }
 
 .job-detail__title {
   font-size: 2rem;
-  font-weight: 800;
-  color: #1e293b;
-  margin: 0 0 1rem 0;
-  line-height: 1.2;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.5rem 0;
+}
+
+.job-detail__company-name {
+  font-size: 1.1rem;
+  color: #64748b;
+  margin: 0 0 1.5rem 0;
 }
 
 .job-detail__meta {
   display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
   flex-wrap: wrap;
-  gap: 1rem;
 }
 
-.job-detail__type,
-.job-detail__location,
-.job-detail__salary {
-  padding: 0.375rem 0.75rem;
-  background-color: #f1f5f9;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  font-weight: 600;
+.meta-badge {
+  padding: 0.5rem 1rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  font-size: 0.85rem;
+  font-weight: 500;
   color: #475569;
 }
 
 .job-detail__actions {
-  flex-shrink: 0;
   display: flex;
-  flex-direction: column;
   gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
-.job-detail__edit-btn {
-  display: inline-flex;
-  align-items: center;
+.btn {
   padding: 0.75rem 1.5rem;
-  background-color: #059669;
-  color: #ffffff;
+  font-size: 0.9rem;
   font-weight: 600;
-  border-radius: 10px;
   text-decoration: none;
-  transition: background-color 160ms ease, transform 160ms ease;
-}
-
-.job-detail__edit-btn:hover {
-  background-color: #047857;
-  transform: translateY(-1px);
-}
-
-.job-detail__apply-btn {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.75rem 1.5rem;
-  background-color: #0f172a;
-  color: #ffffff;
-  font-weight: 600;
-  border-radius: 10px;
-  text-decoration: none;
-  transition: background-color 160ms ease, transform 160ms ease;
-}
-
-.job-detail__apply-btn:hover {
-  background-color: #334155;
-  transform: translateY(-1px);
-}
-
-.job-detail__delete-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.5rem;
-  background-color: #dc2626;
-  color: #ffffff;
-  font-weight: 600;
   border: none;
-  border-radius: 10px;
   cursor: pointer;
-  transition: background-color 160ms ease, transform 160ms ease;
-  min-width: 120px;
+  transition: all 200ms ease;
+  min-width: 100px;
+  text-align: center;
 }
 
-.job-detail__delete-btn:hover:not(:disabled) {
-  background-color: #b91c1c;
-  transform: translateY(-1px);
+.btn--edit {
+  background: #059669;
+  color: #ffffff;
 }
 
-.job-detail__delete-btn:disabled {
+.btn--edit:hover {
+  background: #047857;
+}
+
+.btn--apply {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.btn--apply:hover {
+  background: #1e293b;
+}
+
+.btn--delete {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.btn--delete:hover:not(:disabled) {
+  background: #b91c1c;
+}
+
+.btn--delete:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.job-detail__content {
+.job-detail__grid {
   display: grid;
-  grid-template-columns: 1fr 360px;
+  grid-template-columns: 2fr 1fr;
   gap: 2rem;
 }
 
 .job-detail__description,
 .job-detail__company {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   padding: 2rem;
 }
 
-.job-detail__section-title {
+.section-title {
   font-size: 1.25rem;
-  font-weight: 700;
-  color: #1e293b;
+  font-weight: 600;
+  color: #0f172a;
   margin: 0 0 1rem 0;
 }
 
 .job-detail__text {
-  font-size: 0.95rem;
-  color: #64748b;
+  font-size: 1rem;
+  color: #475569;
   line-height: 1.7;
   margin: 0;
 }
 
-.job-detail__company-name {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: #1e293b;
+.company-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #0f172a;
   margin: 0 0 0.75rem 0;
 }
 
-.job-detail__contact {
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #e2e8f0;
-}
-
-.job-detail__contact p {
-  font-size: 0.875rem;
+.company-description {
+  font-size: 0.9rem;
   color: #64748b;
-  margin: 0.25rem 0;
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
 }
 
-.job-detail__not-found {
+.contact-info {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 1rem;
+}
+
+.contact-info p {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin: 0.5rem 0;
+}
+
+.not-found {
   text-align: center;
   padding: 4rem 1rem;
 }
 
-.job-detail__not-found h2 {
+.not-found h2 {
   color: #1e293b;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 768px) {
-  .job-detail__header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .job-detail__content {
+  .job-detail__grid {
     grid-template-columns: 1fr;
   }
 
-  .job-detail__title {
-    font-size: 1.5rem;
+  .job-detail__actions {
+    flex-direction: column;
   }
 
-  .job-detail__meta {
-    flex-direction: column;
-    gap: 0.5rem;
+  .btn {
+    width: 100%;
   }
 }
 </style>

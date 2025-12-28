@@ -1,3 +1,9 @@
+<script setup>
+defineOptions({
+  name: 'BaseCard'
+})
+</script>
+
 <template>
   <div class="card">
     <slot></slot>
@@ -6,9 +12,8 @@
 
 <style scoped>
 .card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px red;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.1);
   overflow: hidden;
   max-width: 300px;
   margin: 16px;
@@ -36,7 +41,7 @@
 }
 .card-actions {
   padding: 8px 16px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #e2e8f0;
   display: flex;
   justify-content: flex-end;
 }

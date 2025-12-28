@@ -3,5 +3,5 @@ import JobList from '@/components/Jobs/JobList/JobList.vue';
 
 </script>
 <template>
-  <JobList />
+  <JobList :columns="4" />
 </template>
